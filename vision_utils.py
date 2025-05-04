@@ -40,7 +40,7 @@ def detect_animal_from_bytes(image_bytes: bytes):
     detected_labels = [label.description for label in labels]
     matched = list({categories[label] for label in detected_labels if label in categories})
 
-    return matched
+    return matched, detected_labels
 
 def get_category_bvin(animal_name):
     url = f"{BASE_URL}/categories?key={API_KEY}"
@@ -66,9 +66,12 @@ def get_products_by_category_bvin(bvin):
     return products
 
 def get_products_from_image(image_bytes):
-    matched_categories = detect_animal_from_bytes(image_bytes)
+    matched_categories, detected_labels = detect_animal_from_bytes(image_bytes)
     if not matched_categories:
-        return {"error": "No matching animal category found."}
+        return {
+            "error": "Nem található megfelelő állatkategória.",
+            "detected_labels": detected_labels
+        }
 
     results = []
     for category_name in matched_categories:
@@ -83,6 +86,10 @@ def get_products_from_image(image_bytes):
 if __name__ == "__main__":
     with open("kutya.jpg", "rb") as f:
         image_data = f.read()
-    products = get_products_from_image(image_data)
-    for product in products:
-        print(f"- {product.get('ProductName')} (SKU: {product.get('Sku')})")
+    result = get_products_from_image(image_data)
+    if isinstance(result, dict) and "error" in result:
+        print(f"Hiba: {result['error']}")
+        print(f"Felismerhető címkék: {', '.join(result['detected_labels'])}")
+    else:
+        for product in result:
+            print(f"- {product.get('ProductName')} (SKU: {product.get('Sku')})")
