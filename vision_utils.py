@@ -70,7 +70,8 @@ def get_products_from_image(image_bytes):
     if not matched_categories:
         return {
             "error": "Nem található megfelelő állatkategória.",
-            "detected_labels": detected_labels
+            "detected_labels": detected_labels,
+            "products": []
         }
 
     results = []
@@ -80,7 +81,11 @@ def get_products_from_image(image_bytes):
             products = get_products_by_category_bvin(bvin)
             results.extend(products)
 
-    return results
+    return {
+        "error": None,
+        "detected_labels": detected_labels,
+        "products": results
+    }
 
 # Example usage for testing locally
 if __name__ == "__main__":
