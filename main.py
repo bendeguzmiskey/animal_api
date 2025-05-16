@@ -12,12 +12,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 @app.post("/analyze")
 async def analyze_animal(image: UploadFile = File(...)):
     try:
         content = await image.read()
-        categories = get_products_from_image(content)
-        return {"categories": categories}
+        data = get_products_from_image(content)
+        # Just return the dict as-is, with error/detected_labels/products keys
+        return data
     except Exception as e:
         return {"error": str(e)}
+
