@@ -25,8 +25,16 @@ categories = {
     "Lizard": "Halak, hüllők",
     "Turtle": "Halak, hüllők",
     "Snake": "Halak, hüllők",
-    "Frog": "Halak, hüllők"
+    "Frog": "Halak, hüllők",
+    "Parrot": "Madarak",
+    "Budgerigar": "Madarak",
+    "Canary": "Madarak",
+    "Cockatiel": "Madarak",
+    "Finch": "Madarak",
+    "Lovebird": "Madarak",
+    "Macaw": "Madarak"
 }
+
 
 # Hotcakes API details
 API_KEY = "1-288389cf-7bc1-48bc-be62-f5d43693d830"
